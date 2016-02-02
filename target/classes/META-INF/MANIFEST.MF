@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Implementation-Title: BackendHotel
-Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: Marquinhos
-Implementation-Vendor-Id: br.com.backend
-Build-Jdk: 1.8.0_05
-Created-By: Maven Integration for Eclipse
-Implementation-Vendor: Pivotal Software, Inc.
-
