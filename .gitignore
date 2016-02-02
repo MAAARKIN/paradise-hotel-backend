@@ -1,0 +1,11 @@
+/.project
+/.classpath
+/.mvn/
+/.settings/
+/.settings/*
+/target/
+/target/*
+/.DS_Store
+.DS_Store
+target/
+target/*
