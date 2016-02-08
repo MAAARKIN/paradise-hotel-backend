@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
 
 import br.com.backend.model.Role;
@@ -63,7 +64,9 @@ public class InitComponent implements CommandLineRunner {
 		log.info("Customer found with findByLastName('Jack'):");
 		log.info("--------------------------------------------");
 		User teste = repository.findOneByUsername("Jack");
-		log.info(teste.toString());
+		log.info(teste.toString()); 
+		String[] kanxa = new String[teste.getRoles().size()];
+		System.out.println(kanxa);
 		for (GrantedAuthority auth : teste.getAuthorities()) {
 			System.out.println(auth.getAuthority());
 		}

@@ -14,27 +14,23 @@ public class Role implements GrantedAuthority {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	private String name;
+	private String authority;
 	
 	public Role() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Role(String name) {
-		this.name = name;
+	public Role(String authority) {
+		this.setAuthority(authority);
 	}
 	
 	@Override
 	public String getAuthority() {
-		return this.name;
+		return this.authority;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setAuthority(String authority) {
+		this.authority = authority;
 	}
 
 }

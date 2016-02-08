@@ -1,19 +1,23 @@
 package br.com.backend.security;
 
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+
+import br.com.backend.service.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+@Component
 public class TokenHandler {
 
-	private final String secret;
-    private final UserDetailsService userService;
+	@Value("${secret}") private String secret;
+    @Inject private UserService userService;
 
-    public TokenHandler(String secret, UserDetailsService userService) {
-        this.secret = secret;
-        this.userService = userService;
+    public TokenHandler() {
+    	System.out.println(secret);
     }
 
     public UserDetails parseUserFromToken(String token) {

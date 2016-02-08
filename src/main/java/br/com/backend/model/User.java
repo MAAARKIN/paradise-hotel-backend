@@ -1,5 +1,6 @@
 package br.com.backend.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -13,9 +14,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class User implements UserDetails {
@@ -24,7 +29,9 @@ public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	@NotBlank @NotNull
 	private String username;
+	@NotBlank @NotNull
     private String password;
     private String email;
     private String firstName;
@@ -34,15 +41,20 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="user_roles",  
     joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},  
-    inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")})  
+    inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")})
+    @JsonIgnore
     private List<Role> roles;
-    @Transient private boolean accountNonExpired = true;
-    @Transient private boolean accountNonLocked = true;
-    @Transient private boolean credentialsNonExpired = true;
-    @Transient private boolean enabled = true;
+    @JsonIgnore @Transient private boolean accountNonExpired = true;
+    @JsonIgnore @Transient private boolean accountNonLocked = true;
+    @JsonIgnore @Transient private boolean credentialsNonExpired = true;
+    @JsonIgnore @Transient private boolean enabled = true;
 	
 	public User() {
-		// TODO Auto-generated constructor stub
+		
+	}
+	
+	public void addAuthority(String authority) {
+		this.getRoles().add(new Role(authority));
 	}
 	
 	public User(String username, String password) {
@@ -140,6 +152,9 @@ public class User implements UserDetails {
     }
 
 	public List<Role> getRoles() {
+		if (roles == null) {
+			roles = new ArrayList<Role>();
+		}
 		return roles;
 	}
 
